@@ -1,0 +1,103 @@
+{% extends "home.html" %}
+{% load static %}
+{% block content %}
+<!-- Floating Donate Button (Top-Right, Circular) -->
+ {% if user.is_authenticated %}
+
+
+
+<a href="{% url 'payment' %}" target="_blank"
+   style="
+       position: absolute;  /* will scroll with the page */
+       top: 80px;           /* distance from top of container */
+       right: 20px;         /* distance from right */
+       z-index: 1050;
+   ">
+    <img src="{% static 'images/donate.png' %}" alt="Donate"
+         style="
+             width: 100px;
+             height: 100px;
+             border-radius: 50%;
+             object-fit: cover;
+             cursor: pointer;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+             transition: transform 0.2s;
+         ">
+</a>
+
+ {% else %}
+<a href="{% url 'payment' %}" target="_blank"
+   style="
+       position: absolute;  /* will scroll with the page */
+       top: 80px;           /* distance from top of container */
+       right: 20px;         /* distance from right */
+       z-index: 1050;
+   ">
+    <img src="{% static 'images/donate.png' %}" alt="Donate"
+         style="
+             width: 100px;
+             height: 100px;
+             border-radius: 50%;
+             object-fit: cover;
+             cursor: pointer;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+             transition: transform 0.2s;
+         ">
+</a>
+    {% endif %}
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">📬 Contact Us</h2>
+
+    <div class="card shadow p-4">
+        <p class="mb-4 text-center">
+            Have questions, suggestions, or want to get in touch? Fill out the form below and we’ll get back to you as soon as possible.
+        </p>
+
+       <form method="POST" action="">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label for="id_name" class="form-label">Your Name</label>
+        <input type="text" class="form-control" id="id_name" name="name"
+               placeholder="Enter your name"
+               value="{% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% endif %}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="id_email" name="email"
+               placeholder="Enter your email"
+               value="{% if user.is_authenticated %}{{ user.email }}{% endif %}"
+               required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_message" class="form-label">Message</label>
+        <textarea class="form-control" id="id_message" name="message" rows="5" placeholder="Your message..." required></textarea>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+    </div>
+</form>
+
+
+       {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success mt-3 text-center" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+
+<!-- Optional Hover Effect -->
+<style>
+    a img:hover {
+        transform: scale(1.1);
+    }
+</style>
+{% endblock %}

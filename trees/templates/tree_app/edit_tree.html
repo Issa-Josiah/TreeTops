@@ -1,0 +1,17 @@
+{% extends 'home.html' %}
+
+{% block title %}Edit {{ tree.name }}{% endblock %}
+
+{% block content %}
+<div class="card custom-card p-4 mx-auto" style="max-width:600px;">
+    <h2>{{ form_title }}</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success btn-custom w-100 mt-3">Save</button>
+    </form>
+</div>
+
+{% endblock %}
+
+
